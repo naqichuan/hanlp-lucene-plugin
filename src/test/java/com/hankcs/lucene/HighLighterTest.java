@@ -28,8 +28,8 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.*;
+import org.apache.lucene.store.ByteBuffersDirectory;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
 
 import java.io.IOException;
 
@@ -57,7 +57,7 @@ public class HighLighterTest extends TestCase
         {
             //索引过程**********************************
             //建立内存索引对象
-            directory = new RAMDirectory();
+            directory = new ByteBuffersDirectory();
 
             //配置IndexWriterConfig
             IndexWriterConfig iwConfig = new IndexWriterConfig(analyzer);
@@ -92,7 +92,7 @@ public class HighLighterTest extends TestCase
 
             //搜索相似度最高的5条记录
             TopDocs topDocs = isearcher.search(query, 5);
-            System.out.println("命中：" + topDocs.totalHits);
+            System.out.println("命中：" + topDocs.totalHits.value);
             //输出结果
             ScoreDoc[] scoreDocs = topDocs.scoreDocs;
 

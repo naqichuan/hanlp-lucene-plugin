@@ -6,7 +6,7 @@
 
     <groupId>com.hankcs.nlp</groupId>
     <artifactId>hanlp-lucene-plugin</artifactId>
-    <version>1.1.7</version>
+    <version>9.12.3</version>
 
     <name>hanlp-solr-plugin</name>
     <url>https://github.com/hankcs/hanlp-lucene-plugin</url>
@@ -41,13 +41,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-        <hanlp.version>portable-1.7.6</hanlp.version>
-        <lucene.version>7.2.0</lucene.version>
+        <hanlp.version> portable-1.8.6</hanlp.version>
+        <lucene.version>9.12.3</lucene.version>
 
-        <javac.src.version>1.7</javac.src.version>
-        <javac.target.version>1.7</javac.target.version>
-        <maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
-        <maven-source-plugin.version>2.4</maven-source-plugin.version>
+        <javac.src.version>17</javac.src.version>
+        <javac.target.version>17</javac.target.version>
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <maven-source-plugin.version>3.3.1</maven-source-plugin.version>
+        <maven-javadoc-plugin.version>3.6.3</maven-javadoc-plugin.version>
     </properties>
 
     <dependencies>
@@ -87,7 +88,7 @@
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
-            <artifactId>lucene-analyzers-common</artifactId>
+            <artifactId>lucene-analysis-common</artifactId>
             <version>${lucene.version}</version>
         </dependency>
     </dependencies>
@@ -97,8 +98,8 @@
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <target>${javac.src.version}</target>
-                    <source>${javac.target.version}</source>
+                    <source>${javac.src.version}</source>
+                    <target>${javac.target.version}</target>
                 </configuration>
                 <version>${maven.compiler.plugin.version}</version>
             </plugin>
@@ -118,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.9.1</version>
+                <version>${maven-javadoc-plugin.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -145,7 +146,7 @@
         </plugins>
     </build>
 
-    <!--禁用Java8过于严格的javadoc警告-->
+    <!--禁用Java 8+过于严格的javadoc警告-->
     <profiles>
         <profile>
             <id>disable-java8-doclint</id>

@@ -80,7 +80,7 @@ public class SegmentWrapper
     /**
      * 重置分词器
      *
-     * @param reader
+     * @param reader 新的文本输入流
      */
     public void reset(Reader reader)
     {

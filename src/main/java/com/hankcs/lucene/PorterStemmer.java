@@ -6,12 +6,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.apache.lucene.util.RamUsageEstimator.NUM_BYTES_CHAR;
-
 /**
  * 抄袭lucene的英文处理
  * Stemmer, implementing the Porter Stemming Algorithm
- * <p/>
+ * <p>
  * The Stemmer class transforms a word into its root form. The input word can be
  * provided a character at time (by calling add()), or at once by calling one of
  * the various stem(something) methods.
@@ -45,6 +43,8 @@ public class PorterStemmer
     /**
      * Add a character to the word being stemmed. When you are finished adding
      * characters, you can call stem(void) to process the word.
+     *
+     * @param ch a character from the input word
      */
     public void add(char ch)
     {
@@ -68,6 +68,8 @@ public class PorterStemmer
 
     /**
      * Returns the length of the word resulting from the stemming process.
+     *
+     * @return length of the current result in buffer
      */
     public int getResultLength()
     {
@@ -78,6 +80,8 @@ public class PorterStemmer
      * Returns a reference to a character buffer containing the results of the
      * stemming process. You also need to consult getResultLength() to determine
      * the length of the result.
+     *
+     * @return internal buffer containing stemmed word characters
      */
     public char[] getResultBuffer()
     {
@@ -525,6 +529,9 @@ public class PorterStemmer
 
     /**
      * Stem a word provided as a String. Returns the result as a String.
+     *
+     * @param s input word
+     * @return stemmed word if changed, otherwise original input
      */
     public String stem(String s)
     {
@@ -536,6 +543,9 @@ public class PorterStemmer
      * Stem a word contained in a char[]. Returns true if the stemming process
      * resulted in a word different from the input. You can retrieve the result
      * with getResultLength()/getResultBuffer() or toString().
+     *
+     * @param word input word buffer
+     * @return true if stemming changed the input word
      */
     public boolean stem(char[] word)
     {
@@ -547,13 +557,18 @@ public class PorterStemmer
      * stemming process resulted in a word different from the input. You can
      * retrieve the result with getResultLength()/getResultBuffer() or
      * toString().
+     *
+     * @param wordBuffer input word buffer
+     * @param offset start offset in the buffer
+     * @param wordLen number of characters to stem
+     * @return true if stemming changed the input word
      */
     public boolean stem(char[] wordBuffer, int offset, int wordLen)
     {
         reset();
         if (b.length < wordLen)
         {
-            b = new char[ArrayUtil.oversize(wordLen, NUM_BYTES_CHAR)];
+            b = new char[ArrayUtil.oversize(wordLen, Character.BYTES)];
         }
         System.arraycopy(wordBuffer, offset, b, 0, wordLen);
         i = wordLen;
@@ -565,6 +580,10 @@ public class PorterStemmer
      * true if the stemming process resulted in a word different from the input.
      * You can retrieve the result with getResultLength()/getResultBuffer() or
      * toString().
+     *
+     * @param word input word buffer
+     * @param wordLen number of leading characters to stem
+     * @return true if stemming changed the input word
      */
     public boolean stem(char[] word, int wordLen)
     {
@@ -576,12 +595,20 @@ public class PorterStemmer
      * Returns true if the stemming process resulted in a word different from
      * the input. You can retrieve the result with
      * getResultLength()/getResultBuffer() or toString().
+     *
+     * @return true if stemming changed the current buffer content
      */
     public boolean stem()
     {
         return stem(0);
     }
 
+    /**
+     * Stem the current buffer with a custom start index.
+     *
+     * @param i0 start index for stemming
+     * @return true if stemming changed the current buffer content
+     */
     public boolean stem(int i0)
     {
         k = i - 1;
@@ -605,6 +632,8 @@ public class PorterStemmer
     /**
      * Test program for demonstrating the Stemmer. It reads a file and stems
      * each word, writing the result to standard out. Usage: Stemmer file-name
+     *
+     * @param args file paths to stem
      */
     public static void main(String[] args)
     {
